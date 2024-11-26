@@ -1,7 +1,7 @@
 services:
   app:
     build: .
-    command: ruby app/main.rb 
+    command: ruby app/main.rb config/sample-endpoints.yaml
     volumes:
       - .:/app
     stdin_open: true

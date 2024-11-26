@@ -6,4 +6,4 @@ RUN bundle install
 
 COPY . .
 
-CMD ["ruby", "app/main.rb"]
+CMD ["ruby", "app/main.rb", "config/sample-endpoints.yaml"]
