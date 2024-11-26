@@ -5,13 +5,13 @@ class HealthCheck
   def initialize(config_path)
     @endpoints = YAML.load_file(config_path)
     @availability = Hash.new { |hash, key| hash[key] = { up: 0, total: 0 } }
-    @responses = {}
   end
 
   def run
     loop do
+      start_time = Time.now
       check_endpoints
-      log_availability
+      log_availability(start_time)
       sleep 15
     end
   end
@@ -44,10 +44,12 @@ class HealthCheck
     (Time.now - start_time) * 1000
   end
 
-  def log_availability
+  def log_availability(start_time)
+    puts "Checked: #{start_time}"
     @availability.each do |domain, stats|
       availability_percentage = (100.0 * stats[:up] / stats[:total]).round
       puts "#{domain} has #{availability_percentage}% availability"
     end
+    puts "\n"
   end
 end
