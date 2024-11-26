@@ -1,4 +1,11 @@
 require 'yaml'
+require 'faraday'
+
+class HealthCheck
+  def initialize(config_path)
+    @endpoints = YAML.load_file(config_path)
+  end
+end
 
 def run
   config_path = ARGV[0]
@@ -7,7 +14,7 @@ def run
     exit 1
   end
 
-  config = YAML.load_file(config_path)
+  config = HealthCheck.new(config_path)
   puts "File loaded: #{config.inspect}"
 
   loop do
