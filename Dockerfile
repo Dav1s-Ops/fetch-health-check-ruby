@@ -11,4 +11,9 @@ RUN bundle install
 
 COPY . .
 
-CMD ["ruby", "app/main.rb", "config/sample-endpoints.yaml"]
+ARG ENDPOINTS_PATH
+RUN test -n "$ENDPOINTS_PATH" || (echo "ENDPOINTS_PATH argument is required" && exit 1)
+
+ENV ENDPOINTS_PATH=${ENDPOINTS_PATH}
+
+CMD ["ruby", "app/main.rb", "${ENDPOINTS_PATH}"]

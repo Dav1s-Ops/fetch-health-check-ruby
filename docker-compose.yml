@@ -1,8 +1,13 @@
 services:
   app:
-    build: .
-    command: ruby app/main.rb config/sample-endpoints.yaml
+    build: 
+      context: .
+      args:
+        ENDPOINTS_PATH: ${ENDPOINTS_PATH}
+    environment:
+      ENDPOINTS_PATH: ${ENDPOINTS_PATH}
     volumes:
       - .:/app
     stdin_open: true
     tty: true
+    command: ruby app/main.rb ${ENDPOINTS_PATH}
