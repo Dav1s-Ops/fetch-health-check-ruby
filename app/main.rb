@@ -5,6 +5,11 @@ if ARGV.empty?
   exit 1
 end
 
+trap("INT") do
+  puts "\nExiting... "
+  exit
+end
+
 config_file = ARGV[0]
 health_check = HealthCheck.new(config_file)
 health_check.run
