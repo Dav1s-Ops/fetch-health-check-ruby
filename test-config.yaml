@@ -1,0 +1,16 @@
+# Testing file for arbitrary file path
+
+- url: "https://www.postman.com/explore"
+  method: "GET"
+  headers:
+    Authorization: "Bearer token"
+  body: null
+
+- url: "https://www.google.com"
+
+- url: "https://catfact.ninja/fact"
+  method: "gEt"
+  headers:
+    Cache-Control: "no-cache"
+
+- url: "https://www.dw-portfolio.com"
