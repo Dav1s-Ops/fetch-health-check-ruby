@@ -37,9 +37,9 @@ The main components of the application are:
 
 ## Prerequisites
 
-- Docker Desktop
-- Ruby (if running locally without Docker)
-- Configuration file (YAML format) that specifies the endpoints to monitor
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [Ruby](https://www.ruby-lang.org/en/documentation/installation/#rbenv) (if running locally without Docker I recommended using `rbenv` for version management)
+- Configuration file (YAML format) that specifies the endpoints to monitor if not using the default file
 
 ### ⚠️ Note: Docker Desktop must be installed and running
 
