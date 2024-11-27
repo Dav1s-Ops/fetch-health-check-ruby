@@ -1,7 +1,10 @@
 require 'yaml'
 require 'faraday'
+require 'logger'
 
 class HealthCheck
+  attr_accessor :timeout
+
   def initialize(config_path, timeout: 15)
     @endpoints = YAML.load_file(config_path)
     @availability = Hash.new { |hash, key| hash[key] = { up: 0, total: 0 } }
@@ -9,6 +12,8 @@ class HealthCheck
       f.options.timeout = timeout
     end
     @timeout = timeout
+    @logger = Logger.new($stdout)
+    @logger.level = Logger::INFO
   end
 
   def run
@@ -25,12 +30,17 @@ class HealthCheck
   def check_endpoints
     @endpoints.each do |endpoint|
       domain = URI(endpoint["url"]).host
-      response, latency = fetch_response_with_latency(endpoint)
+      begin
+        response, latency = fetch_response_with_latency(endpoint)
 
-      if response.success? && latency < 0.5
-        @availability[domain][:up] += 1
+        if response.success? && latency < 0.5
+          @availability[domain][:up] += 1
+        end
+        @availability[domain][:total] += 1
+
+      rescue Faraday::TimeoutError => error
+        @logger.warn "Timeout error for endpoint #{endpoint['url']}: #{error.message}"
       end
-      @availability[domain][:total] += 1
     end
   end
 
@@ -52,7 +62,7 @@ class HealthCheck
 
   def log_availability(start_time)
     puts "Checked: #{start_time}"
-    puts "Timeout: #{@timeout}s"
+    puts "Timeout/Interval: #{@timeout}s"
     @availability.each do |domain, stats|
       availability_percentage = (100.0 * stats[:up] / stats[:total]).round
       puts "#{domain} has #{availability_percentage}% availability"
