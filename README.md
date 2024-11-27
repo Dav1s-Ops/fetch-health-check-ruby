@@ -5,7 +5,7 @@ Here is a simple Health Check application for monitoring the availability and la
 ## Table of Contents 📚
 
 - [Health Check App](#health-check-app)
-  - [Table of Contents](#table-of-contents)
+  - [Table of Contents](#table-of-contents-📚)
   - [Overview](#overview)
   - [Prerequisites](#prerequisites)
     - [Configuration File Format](#configuration-file-format)
