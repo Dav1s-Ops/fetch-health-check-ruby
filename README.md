@@ -2,7 +2,7 @@
 
 Here is a simple Health Check application for monitoring the availability and latency of specified endpoints! The application reads a configuration YAML file, makes HTTP requests to each endpoint, and logs their availability.
 
-## Table of Contents 📚
+## Table of Contents
 
 - [Health Check App](#health-check-app)
   - [Table of Contents](#table-of-contents-📚)
@@ -23,7 +23,7 @@ Here is a simple Health Check application for monitoring the availability and la
   - [Troubleshooting](#troubleshooting)
   - [What's Next?](#whats-next)
 
-## Overview 🌎
+## Overview
 
 The application consists of a Ruby script (`health_check.rb`) that checks the availability of given endpoints on a configurable interval and logs their status as a percentage. It is designed to run in a loop, continuously checking endpoints by default every 15 seconds.
 
@@ -35,7 +35,7 @@ The main components of the application are:
 #### Example of a successful build/run
 ![Health Check Fetch](https://github.com/user-attachments/assets/c387ee4b-cd65-43ff-ad45-3d9a9fbb3e87)
 
-## Prerequisites 🪝
+## Prerequisites
 
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 - [Ruby](https://www.ruby-lang.org/en/documentation/installation/#rbenv) (if running locally without Docker I recommended using `rbenv` for version management)
@@ -73,7 +73,7 @@ The configuration file should be a YAML file that contains an array of endpoints
 - **`headers`**: Optional headers to be included in the request.
 - **`body`**: Optional body to be included in the request (for POST, PUT, etc.).
 
-## How to Run 🎬
+## How to Run
 
 ### 1. Clone the repository
 ```bash
@@ -122,7 +122,7 @@ This script will set up the appropriate environment variable (`ENDPOINTS_PATH`) 
 ruby main.rb <path_to_your_endpoints.yml>
 ```
 
-## Logging 📝
+## Logging
 
 The application logs the availability of each domain after every cycle to STDOUT. It displays the percentage of successful checks and prints the results to the console.
 
@@ -134,14 +134,14 @@ example.com has 95% availability
 another-example.com has 100% availability
 ```
 
-## Stopping the Application 🛑
+## Stopping the Application
 The application runs in a continuous loop, checking endpoints every 15 seconds by default. To stop the Docker container, press `CTRL+C` in the terminal where the container is running.
 
-## Development Notes 🪡
+## Development Notes
 - This application uses the `Faraday` gem for making HTTP requests.
 - Latency is measured, and endpoints are considered healthy if the response status is between `200-299` and the response latency is less than `500ms`. This does not account for `3XX` as specified by the guidelines.
 
-## Troubleshooting 🔦
+## Troubleshooting
 
 If you encounter issues while running the application, here are some troubleshooting steps you can take:
 
