@@ -20,6 +20,7 @@ Here is a simple Health Check application for monitoring the availability and la
   - [Logging](#logging)
   - [Stopping the Application](#stopping-the-application)
   - [Development Notes](#development-notes)
+  - [Troubleshooting](#troubleshooting)
   - [What's Next?](#whats-next)
 
 ## Overview
@@ -133,6 +134,29 @@ The application runs in a continuous loop, checking endpoints every 15 seconds. 
 ## Development Notes
 - This application uses the `Faraday` gem for making HTTP requests.
 - Latency is measured, and endpoints are considered healthy if the response status is between `200-299` and the response latency is less than `500ms`. This does not account for `300-302`
+
+## Troubleshooting
+
+If you encounter issues while running the application, here are some troubleshooting steps you can take:
+
+**Check Configuration File:** Ensure that the YAML configuration file is properly formatted and contains all required fields (url, method, etc.).
+
+**Docker Errors:** If Docker containers fail to start, ensure Docker and Docker Compose are installed and running. You can also try rebuilding the Docker image without the bash script by using:
+
+```bash
+ENDPOINTS_PATH=config/sample-endpoints.yaml docker compose up --build
+```
+
+**Network Issues:** If endpoints are not reachable, check your network connection or ensure that the URLs specified are correct and accessible.
+
+**Dependency Issues:** If running locally, make sure all dependencies are installed. Run bundle install to ensure all gems are available. The project was built with `Ruby 3.2.2`
+
+```bash
+ruby -v
+ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin21]
+```
+
+**Environment Variables:** Ensure that `ENDPOINTS_PATH` is set correctly, either in the Docker environment or when running locally. The application requires this to locate the configuration file.
 
 ## What's Next?
 - Configurable sleep interval between checks.
