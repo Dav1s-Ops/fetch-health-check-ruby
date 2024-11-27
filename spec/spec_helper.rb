@@ -13,6 +13,11 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'vcr'
+require 'faraday'
+require 'webmock/rspec'
+require 'yaml'
+require_relative '../app/health_check.rb'
 
 SAMPLE_ENDPOINTS_FILE = File.expand_path('../config/sample-endpoints.yaml', __dir__)
 
@@ -98,4 +103,12 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+end
+
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr_cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+  config.default_cassette_options = { record: :new_episodes }
+  config.allow_http_connections_when_no_cassette = false
 end

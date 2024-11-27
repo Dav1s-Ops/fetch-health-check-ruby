@@ -1,0 +1,133 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://jsonplaceholder.typicode.com/posts
+    body:
+      encoding: UTF-8
+      string: '{"key":"value"}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 27 Nov 2024 21:40:16 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '33'
+      Connection:
+      - keep-alive
+      Report-To:
+      - '{"group":"heroku-nel","max_age":3600,"endpoints":[{"url":"https://nel.heroku.com/reports?ts=1732743616&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=Efn%2FzsSvu6aUiQzTNzCibOtKBA2TsYNy1aPx9tjDRk8%3D"}]}'
+      Reporting-Endpoints:
+      - heroku-nel=https://nel.heroku.com/reports?ts=1732743616&sid=e11707d5-02a7-43ef-b45e-2cf4d2036f7d&s=Efn%2FzsSvu6aUiQzTNzCibOtKBA2TsYNy1aPx9tjDRk8%3D
+      Nel:
+      - '{"report_to":"heroku-nel","max_age":3600,"success_fraction":0.005,"failure_fraction":0.05,"response_headers":["Via"]}'
+      X-Powered-By:
+      - Express
+      X-Ratelimit-Limit:
+      - '1000'
+      X-Ratelimit-Remaining:
+      - '999'
+      X-Ratelimit-Reset:
+      - '1732743650'
+      Vary:
+      - Origin, X-HTTP-Method-Override, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - no-cache
+      Pragma:
+      - no-cache
+      Expires:
+      - "-1"
+      Access-Control-Expose-Headers:
+      - Location
+      Location:
+      - https://jsonplaceholder.typicode.com/posts/101
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"21-6wcXYLefgc2kBONgATtFSPiI8xQ"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - DYNAMIC
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8e9546902a954df1-MCI
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=27838&min_rtt=23481&rtt_var=11918&sent=4&recv=7&lost=0&retrans=0&sent_bytes=2796&recv_bytes=851&delivery_rate=122652&cwnd=251&unsent_bytes=0&cid=aecc75a5417f788c&ts=170&x=0"
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "key": "value",
+          "id": 101
+        }
+  recorded_at: Wed, 27 Nov 2024 21:40:16 GMT
+- request:
+    method: post
+    uri: https://catfact.ninja/fact
+    body:
+      encoding: UTF-8
+      string: '{"key":"value"}'
+    headers:
+      Content-Type:
+      - application/json
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Date:
+      - Wed, 27 Nov 2024 21:41:13 GMT
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '34'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - no-cache, private
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=GYCwSgJEI0qN9Z2Sdks5C%2F65JyCIdIyMzYCe1SMAcDc%2BYf0EXxFT8iWbvivou5m2axc7pXPmUzQbVmkg4f6gD82VykVMPyRQmLQhDhtk05SqkSBH5VXf%2BMKKSrInEALU"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 8e9547f8bff6f60e-ORD
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      Server-Timing:
+      - cfL4;desc="?proto=TCP&rtt=38045&min_rtt=37623&rtt_var=14410&sent=4&recv=7&lost=0&retrans=0&sent_bytes=2797&recv_bytes=835&delivery_rate=76548&cwnd=32&unsent_bytes=0&cid=33a5053a9088e0e4&ts=79&x=0"
+    body:
+      encoding: UTF-8
+      string: '{"message":"Not Found","code":404}'
+  recorded_at: Wed, 27 Nov 2024 21:41:13 GMT
+recorded_with: VCR 6.3.1

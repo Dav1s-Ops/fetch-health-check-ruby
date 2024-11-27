@@ -1,10 +1,19 @@
 require 'yaml'
 require 'faraday'
+require 'logger'
 
 class HealthCheck
-  def initialize(config_path)
+  attr_accessor :timeout
+
+  def initialize(config_path, timeout: 15)
     @endpoints = YAML.load_file(config_path)
     @availability = Hash.new { |hash, key| hash[key] = { up: 0, total: 0 } }
+    @conn = Faraday.new do |f|
+      f.options.timeout = timeout
+    end
+    @timeout = timeout
+    @logger = Logger.new($stdout)
+    @logger.level = Logger::INFO
   end
 
   def run
@@ -12,7 +21,7 @@ class HealthCheck
       start_time = Time.now
       check_endpoints
       log_availability(start_time)
-      sleep 15
+      sleep @timeout
     end
   end
 
@@ -21,31 +30,39 @@ class HealthCheck
   def check_endpoints
     @endpoints.each do |endpoint|
       domain = URI(endpoint["url"]).host
-      response = fetch_response(endpoint)
-      latency = calculate_latency(endpoint)
+      begin
+        response, latency = fetch_response_with_latency(endpoint)
 
-      if response && response.status.between?(200, 299) && latency < 500
-        @availability[domain][:up] += 1
+        if response.success? && latency < 0.5
+          @availability[domain][:up] += 1
+        end
+        @availability[domain][:total] += 1
+
+      rescue Faraday::TimeoutError => error
+        @logger.warn "Timeout error for endpoint #{endpoint['url']}: #{error.message}"
       end
-      @availability[domain][:total] += 1
     end
   end
 
+  def fetch_response_with_latency(endpoint)
+    start_time = Time.now
+    response = fetch_response(endpoint)
+    end_time = Time.now
+    latency = (end_time - start_time)
+
+    [response, latency]
+  end
+
   def fetch_response(endpoint)
-    Faraday.send(endpoint["method"]&.downcase || "get", endpoint["url"]) do |req|
+    @conn.send(endpoint["method"]&.downcase || "get", endpoint["url"]) do |req|
       req.headers = endpoint["headers"] || {}
       req.body = endpoint["body"] if endpoint["body"]
     end
   end
 
-  def calculate_latency(endpoint)
-    start_time = Time.now
-    fetch_response(endpoint)
-    (Time.now - start_time) * 1000
-  end
-
   def log_availability(start_time)
     puts "Checked: #{start_time}"
+    puts "Timeout/Interval: #{@timeout}s"
     @availability.each do |domain, stats|
       availability_percentage = (100.0 * stats[:up] / stats[:total]).round
       puts "#{domain} has #{availability_percentage}% availability"
