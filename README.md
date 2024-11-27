@@ -163,6 +163,6 @@ ruby 3.2.2 (2023-03-30 revision e51014f9c0) [arm64-darwin21]
 **Environment Variables:** Ensure that `ENDPOINTS_PATH` is set correctly, either in the Docker environment or when running locally. The application requires this to locate the configuration file.
 
 ## What's Next?
-- Configurable sleep interval between checks.
-- More sophisticated logging (e.g., file-based logging).
+- Configurable sleep interval between checks passed as an additional argument with ARGV.
+- More sophisticated logging (e.g., file-based logging) with Logger.
 - Notification support (e.g., send an alert when availability drops below a threshold).
