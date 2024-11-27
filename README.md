@@ -25,19 +25,23 @@ Here is a simple Health Check application for monitoring the availability and la
 
 ## Overview
 
-The application consists of a Ruby script (`health_check.rb`) that periodically checks the availability of given endpoints and logs their status and latency. It is designed to run in a loop, continuously checking endpoints every 15 seconds.
+The application consists of a Ruby script (`health_check.rb`) that periodically checks the availability of given endpoints and logs their status as a percentage. It is designed to run in a loop, continuously checking endpoints every 15 seconds.
 
 The main components of the application are:
 - `health_check.rb`: The main logic for checking the health of endpoints and logging availability.
 - `main.rb`: Entry point for running the health check script.
 - `docker-compose.yml` and `Dockerfile`: Docker configurations to containerize the application and run it using Docker Compose.
 - `run_healthcheck.sh`: A convenience script to run the application using Docker Compose.
+#### Example of a successful build/run
+![Health Check Fetch](https://github.com/user-attachments/assets/c387ee4b-cd65-43ff-ad45-3d9a9fbb3e87)
 
 ## Prerequisites
 
-- Docker and Docker Compose
+- Docker Desktop
 - Ruby (if running locally without Docker)
 - Configuration file (YAML format) that specifies the endpoints to monitor
+
+### ⚠️ Note: Docker Desktop must be installed and running
 
 ### Configuration File Format
 The configuration file should be a YAML file that contains an array of endpoints to be monitored. It should follow the schema layout below.
