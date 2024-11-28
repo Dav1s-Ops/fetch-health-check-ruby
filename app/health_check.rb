@@ -65,7 +65,6 @@ class HealthCheck
   def log_availability(start_time)
     puts "Checked: #{start_time}"
     puts "Timeout/Interval: #{@timeout}s"
-    puts "Domain: #{@availability}"
     @availability.each do |domain, stats|
       availability_percentage = (100.0 * stats[:up] / stats[:total]).round
       puts "#{domain} has #{availability_percentage}% availability"
