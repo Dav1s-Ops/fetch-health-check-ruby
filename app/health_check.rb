@@ -37,9 +37,11 @@ class HealthCheck
           @availability[domain][:up] += 1
         end
         @availability[domain][:total] += 1
-
+      
+      rescue Faraday::ConnectionFailed => error
+        @logger.warn error.message
       rescue Faraday::TimeoutError => error
-        @logger.warn "Timeout error for endpoint #{endpoint['url']}: #{error.message}"
+        @logger.warn error.message
       end
     end
   end
