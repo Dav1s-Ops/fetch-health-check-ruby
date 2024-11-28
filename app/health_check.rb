@@ -37,9 +37,11 @@ class HealthCheck
           @availability[domain][:up] += 1
         end
         @availability[domain][:total] += 1
-
+      
+      rescue Faraday::ConnectionFailed => error
+        @logger.warn error.message
       rescue Faraday::TimeoutError => error
-        @logger.warn "Timeout error for endpoint #{endpoint['url']}: #{error.message}"
+        @logger.warn error.message
       end
     end
   end
@@ -63,6 +65,7 @@ class HealthCheck
   def log_availability(start_time)
     puts "Checked: #{start_time}"
     puts "Timeout/Interval: #{@timeout}s"
+    puts "Domain: #{@availability}"
     @availability.each do |domain, stats|
       availability_percentage = (100.0 * stats[:up] / stats[:total]).round
       puts "#{domain} has #{availability_percentage}% availability"
