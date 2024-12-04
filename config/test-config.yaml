@@ -14,3 +14,12 @@
     Cache-Control: "no-cache"
 
 - url: "https://www.dw-portfolio.com"
+
+- name: slow test endpoint
+  url: http://test_api:4567/delayed?delay=20
+  method: GET
+  headers:
+    Host: test_api.local
+    User-Agent: DockerComposeHealthCheck
+    Accept: application/json
+    Content-Type: application/json

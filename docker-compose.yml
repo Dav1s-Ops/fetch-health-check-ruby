@@ -4,6 +4,8 @@ services:
       context: .
       args:
         ENDPOINTS_PATH: ${ENDPOINTS_PATH}
+    depends_on:
+      - test_api
     environment:
       ENDPOINTS_PATH: ${ENDPOINTS_PATH}
     volumes:
@@ -11,3 +13,11 @@ services:
     stdin_open: true
     tty: true
     command: ruby app/main.rb ${ENDPOINTS_PATH}
+
+  test_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.test_api
+    working_dir: /app
+    ports:
+      - "4567:4567"
