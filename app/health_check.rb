@@ -36,13 +36,13 @@ class HealthCheck
         if response.success? && latency < 0.5
           @availability[domain][:up] += 1
         end
-        @availability[domain][:total] += 1
-      
+        
       rescue Faraday::ConnectionFailed => error
         @logger.warn error.message
       rescue Faraday::TimeoutError => error
-        @logger.warn error.message
+        @logger.warn "#{endpoint["url"]} #{error.message}"
       end
+      @availability[domain][:total] += 1
     end
   end
 
