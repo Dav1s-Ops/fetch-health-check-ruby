@@ -1,6 +1,7 @@
 require 'yaml'
 require 'faraday'
 require 'logger'
+require 'parallel'
 
 class HealthCheck
   attr_accessor :timeout
@@ -21,18 +22,23 @@ class HealthCheck
       start_time = Time.now
       check_endpoints
       log_availability(start_time)
-      sleep @timeout
+      end_time = Time.now
+      drift_time = @timeout - (end_time - start_time).abs
+      puts "Runtime: #{end_time - start_time}"
+      puts "Driftin': #{drift_time}"
+      sleep drift_time
     end
   end
 
   private
 
   def check_endpoints
-    @endpoints.each do |endpoint|
+    thread_process = Parallel.map(@endpoints) do |endpoint|
+
       domain = URI(endpoint["url"]).host
       begin
         response, latency = fetch_response_with_latency(endpoint)
-
+  
         if response.success? && latency < 0.5
           @availability[domain][:up] += 1
         end
